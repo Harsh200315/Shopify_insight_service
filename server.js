@@ -1,4 +1,3 @@
-// server.js
 const express = require('express');
 const { PrismaClient } = require('@prisma/client');
 const cors = require('cors');
@@ -8,15 +7,15 @@ require('dotenv').config();
 const app = express();
 const prisma = new PrismaClient();
 
-app.use(cors());               // Enable CORS for frontend requests
-app.use(express.json());       // Parse JSON bodies
+app.use(cors());
+app.use(express.json());
 
 // Root route
 app.get('/', (req, res) => {
   res.send('Welcome to Xeno FDE Internship Backend');
 });
 
-// Login route - accepts any non-empty email/password and returns JWT token
+// Login route
 app.post('/login', (req, res) => {
   const { email, password } = req.body;
   if (email && password) {
@@ -40,7 +39,7 @@ app.post('/onboard-tenant', async (req, res) => {
   }
 });
 
-// Get insights for tenant (JWT-protected)
+// Get insights for tenant
 app.get('/insights/:tenantId', async (req, res) => {
   const { tenantId } = req.params;
   const authHeader = req.headers.authorization;
@@ -62,7 +61,7 @@ app.get('/insights/:tenantId', async (req, res) => {
 
 // Webhook to ingest orders
 app.post('/webhook/order', async (req, res) => {
-  const tenantId = req.headers['tenantid']; // Tenant ID from webhook headers
+  const tenantId = req.headers['tenantid'];
   const data = req.body;
 
   if (!tenantId) {
@@ -87,6 +86,40 @@ app.post('/webhook/order', async (req, res) => {
     res.sendStatus(200);
   } catch (error) {
     console.error('Error processing webhook order:', error);
+    res.status(500).send();
+  }
+});
+
+// Webhook to ingest customers
+app.post('/webhook/customer', async (req, res) => {
+  const tenantId = req.headers['tenantid'];
+  const data = req.body;
+
+  if (!tenantId) {
+    return res.status(400).json({ error: 'Missing tenant ID in headers' });
+  }
+
+  try {
+    await prisma.customer.upsert({
+      where: { id: data.id.toString() },
+      update: {
+        email: data.email,
+        firstName: data.first_name || '',
+        lastName: data.last_name || '',
+        createdAt: new Date(data.created_at),
+      },
+      create: {
+        id: data.id.toString(),
+        tenantId,
+        email: data.email,
+        firstName: data.first_name || '',
+        lastName: data.last_name || '',
+        createdAt: new Date(data.created_at),
+      },
+    });
+    res.sendStatus(200);
+  } catch (error) {
+    console.error('Error processing webhook customer:', error);
     res.status(500).send();
   }
 });
