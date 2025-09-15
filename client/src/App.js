@@ -18,7 +18,7 @@ function App() {
   const [errorMsg, setErrorMsg] = useState('');
 
   // Updated backend URL to deployed Render backend
-  const backendBaseURL = 'https://shopify-insight-service-backend.onrender.com';
+  const backendBaseURL = 'https://shopify-insight-service-backend1.onrender.com';
 
   const handleLogin = async () => {
     if (!email || !password) {
