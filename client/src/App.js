@@ -1,51 +1,42 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState } from 'react';
+import axios from 'axios';
 import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
-import "./App.css";
+  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
+} from 'recharts';
+import './App.css';
 
 function App() {
-  const [token, setToken] = useState("");
-  const [tenantId, setTenantId] = useState("");
+  const [token, setToken] = useState('');
+  const [tenantId, setTenantId] = useState('');
   const [insights, setInsights] = useState({
     customers: 0,
     orders: [],
     revenue: 0,
   });
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
 
-  const backendBaseURL = "https://shopify-insight-service-backend.onrender.com"; // Change if using deployed backend
+  // Updated backend URL to deployed Render backend
+  const backendBaseURL = 'https://shopify-insight-service-backend.onrender.com';
 
   const handleLogin = async () => {
     if (!email || !password) {
-      setErrorMsg("Please enter both email and password.");
+      setErrorMsg('Please enter both email and password.');
       return;
     }
     try {
-      const res = await axios.post(`${backendBaseURL}/login`, {
-        email,
-        password,
-      });
+      const res = await axios.post(`${backendBaseURL}/login`, { email, password });
       setToken(res.data.token);
-      setErrorMsg("");
+      setErrorMsg('');
     } catch {
-      setErrorMsg("Login failed. Check credentials.");
+      setErrorMsg('Login failed. Check credentials.');
     }
   };
 
   const fetchInsights = async () => {
     if (!tenantId) {
-      setErrorMsg("Please enter a Tenant ID.");
+      setErrorMsg('Please enter a Tenant ID.');
       return;
     }
     try {
@@ -53,7 +44,7 @@ function App() {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      const formattedOrders = res.data.orders.map((order) => ({
+      const formattedOrders = res.data.orders.map(order => ({
         ...order,
         date: new Date(order.date).toLocaleDateString(),
       }));
@@ -63,19 +54,19 @@ function App() {
         orders: formattedOrders,
         revenue: res.data.revenue.toFixed(2),
       });
-      setErrorMsg("");
+      setErrorMsg('');
     } catch {
-      setErrorMsg("Failed to fetch insights. Check Tenant ID and token.");
+      setErrorMsg('Failed to fetch insights. Check Tenant ID and token.');
     }
   };
 
   const handleLogout = () => {
-    setToken("");
-    setTenantId("");
+    setToken('');
+    setTenantId('');
     setInsights({ customers: 0, orders: [], revenue: 0 });
-    setEmail("");
-    setPassword("");
-    setErrorMsg("");
+    setEmail('');
+    setPassword('');
+    setErrorMsg('');
   };
 
   return (
@@ -88,29 +79,23 @@ function App() {
             type="email"
             placeholder="Email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={e => setEmail(e.target.value)}
           />
           <input
             className="login-input"
             type="password"
             placeholder="Password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={e => setPassword(e.target.value)}
           />
-          <button className="login-button" onClick={handleLogin}>
-            Login
-          </button>
-          {errorMsg && (
-            <p style={{ color: "red", marginTop: "12px" }}>{errorMsg}</p>
-          )}
+          <button className="login-button" onClick={handleLogin}>Login</button>
+          {errorMsg && <p style={{ color: 'red', marginTop: '12px' }}>{errorMsg}</p>}
         </div>
       ) : (
         <div className="dashboard">
           <div className="dashboard-header">
             <h1>Xeno Insights Dashboard</h1>
-            <button className="logout-button" onClick={handleLogout}>
-              Logout
-            </button>
+            <button className="logout-button" onClick={handleLogout}>Logout</button>
           </div>
 
           <div className="input-row">
@@ -119,16 +104,12 @@ function App() {
               type="text"
               placeholder="Enter Tenant ID"
               value={tenantId}
-              onChange={(e) => setTenantId(e.target.value)}
+              onChange={e => setTenantId(e.target.value)}
             />
-            <button className="fetch-button" onClick={fetchInsights}>
-              Load Insights
-            </button>
+            <button className="fetch-button" onClick={fetchInsights}>Load Insights</button>
           </div>
 
-          {errorMsg && (
-            <p style={{ color: "red", marginBottom: "20px" }}>{errorMsg}</p>
-          )}
+          {errorMsg && <p style={{ color: 'red', marginBottom: '20px' }}>{errorMsg}</p>}
 
           <div className="metrics">
             <div className="metric-card">
@@ -141,10 +122,7 @@ function App() {
             </div>
           </div>
 
-          <div
-            className="chart-container"
-            style={{ height: 350, width: "100%" }}
-          >
+          <div className="chart-container" style={{ height: 350, width: '100%' }}>
             <ResponsiveContainer>
               <LineChart data={insights.orders}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -152,12 +130,7 @@ function App() {
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Line
-                  type="monotone"
-                  dataKey="amount"
-                  stroke="#008060"
-                  activeDot={{ r: 8 }}
-                />
+                <Line type="monotone" dataKey="amount" stroke="#008060" activeDot={{ r: 8 }} />
               </LineChart>
             </ResponsiveContainer>
           </div>
