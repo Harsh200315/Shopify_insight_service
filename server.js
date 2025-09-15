@@ -95,34 +95,35 @@ app.post('/webhook/customer', async (req, res) => {
   const tenantId = req.headers['tenantid'];
   const data = req.body;
 
-  if (!tenantId) {
-    return res.status(400).json({ error: 'Missing tenant ID in headers' });
-  }
+  console.log('Webhook customer received:', data, 'Tenant ID:', tenantId);
+
+  if (!tenantId) return res.status(400).json({ error: 'Missing tenant ID in headers' });
 
   try {
-    await prisma.customer.upsert({
+    const result = await prisma.customer.upsert({
       where: { id: data.id.toString() },
       update: {
+        name: data.name,
         email: data.email,
-        firstName: data.first_name || '',
-        lastName: data.last_name || '',
-        createdAt: new Date(data.created_at),
+        spend: parseFloat(data.spend) || 0,
+        tenantId,
       },
       create: {
         id: data.id.toString(),
-        tenantId,
+        name: data.name,
         email: data.email,
-        firstName: data.first_name || '',
-        lastName: data.last_name || '',
-        createdAt: new Date(data.created_at),
+        spend: parseFloat(data.spend) || 0,
+        tenantId,
       },
     });
+    console.log('Upsert result:', result);
     res.sendStatus(200);
   } catch (error) {
     console.error('Error processing webhook customer:', error);
     res.status(500).send();
   }
 });
+
 
 // Start server
 const PORT = process.env.PORT || 3000;
