@@ -161,7 +161,7 @@ curl -X POST https://shopify-insight-service-backend1.onrender.com/webhook/order
 
 curl -X POST https://shopify-insight-service-backend1.onrender.com/webhook/customer \
   -H "Content-Type: application/json" \
-  -H "tenantid: b63e0dd0-0162-4e5d-b71b-5ff5f78e93e9" \
+  -H "tenantid: <your tenant_id>" \
   -d '{
     "id": "500333",
     "name": "Jegdjhcvjhewn Doe",
