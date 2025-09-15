@@ -31,7 +31,7 @@ app.post('/onboard-tenant', async (req, res) => {
   const { name, shopifyUrl, apiKey } = req.body;
   try {
     const tenant = await prisma.tenant.create({
-       { name, shopifyUrl, apiKey }
+       data: { name, shopifyUrl, apiKey }
     });
     res.json(tenant);
   } catch (error) {
