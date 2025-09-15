@@ -95,7 +95,7 @@ npm start
   `https://shopify-insight-service-backend1.onrender.com`
 
 - Uses Render PostgreSQL as DB:  
-  `postgresql://shopify_insights_user:your_password@dpg-d33v8tbuibrs73av58r0-a.singapore-postgres.render.com/shopify_insights`
+  `postgresql://shopify_insights1_user:ULACy2KWXkLirNE8ahl95mOtiRRmXmqC@dpg-d343ptq4d50c73enppgg-a.oregon-postgres.render.com/shopify_insights1`
 
 ### Frontend
 
@@ -169,7 +169,7 @@ curl -X POST https://shopify-insight-service-backend1.onrender.com/webhook/custo
     "spend": 10
   }'
 
-
+Please
   
 With header:
 
@@ -191,7 +191,7 @@ Authorization: Bearer <JWT token>
 ## Contributing
 
 Contributions are welcome! Please fork the repo and create pull requests for enhancements or bug fixes.
-
+Please note that: While testing my deployed frontend YOu can use any login credentials and pleatse use Tenant_ID: "635b6ce4-c0af-4fc9-bed6-8e9712279ab4"
 
 ---
 
