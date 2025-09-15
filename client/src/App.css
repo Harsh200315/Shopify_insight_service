@@ -1,0 +1,166 @@
+/* App.css */
+
+body {
+    background: #f5f7fa;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.login-container {
+    max-width: 400px;
+    margin: 60px auto;
+    padding: 30px 40px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.login-container h2 {
+    margin-bottom: 24px;
+    color: #333;
+}
+
+.login-input {
+    width: 100%;
+    padding: 14px 12px;
+    margin-bottom: 20px;
+    border: 1.5px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.login-input:focus {
+    border-color: #008060;
+    outline: none;
+}
+
+.login-button {
+    width: 100%;
+    padding: 14px;
+    background-color: #008060;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+    background-color: #005f48;
+}
+
+.dashboard {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.dashboard-header h1 {
+    color: #222;
+}
+
+.logout-button {
+    background-color: #c0392b;
+    border: none;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.logout-button:hover {
+    background-color: #962d22;
+}
+
+.input-row {
+    display: flex;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+.tenant-input {
+    flex-grow: 1;
+    padding: 12px 14px;
+    font-size: 16px;
+    border: 1.5px solid #ccc;
+    border-radius: 6px;
+}
+
+.fetch-button {
+    background-color: #007acc;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.fetch-button:hover {
+    background-color: #005a99;
+}
+
+.metrics {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30px;
+    background: white;
+    border-radius: 10px;
+    padding: 20px 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.metric-card {
+    text-align: center;
+    flex: 1;
+    margin: 0 15px;
+}
+
+.metric-title {
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.metric-value {
+    font-size: 28px;
+    color: #008060;
+    font-weight: bold;
+}
+
+.chart-container {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.07);
+}
+
+@media (max-width: 600px) {
+    .input-row {
+        flex-direction: column;
+    }
+
+    .metrics {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .metric-card {
+        margin: 0;
+    }
+}
